@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vue Basics</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Jost:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://unpkg.com/vue@next" defer></script>
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <header>
+      <h1>Monster Slayer</h1>
+    </header>
+    <section id="game">
+      <section id="color" class="container" v-if="winner === 'stop'">
+        <h1> Choose an option </h1>
+        <button class="red" @click="setColor('red')"> Red </button>
+        <button class="green" @click="setColor('green')"> Green </button>
+        <button class="blue" @click="setColor('blue')"> Blue </button>
+        <button class="yellow" @click="setColor('yellow')"> Yellow </button>
+        <button  @click="startGame" :disabled="!valid"> PLAY </button>
+      </section>
+      <section id="monster" class="container">
+        <h2>Monster Health</h2>
+        <div class="healthbar">
+        <div id="monsterColor" class="healthbar__value" :style="monsterBarStyle"></div>
+        </div>
+      </section>
+      <section id="player" class="container">
+        <h2>Your Health</h2>
+        <div class="healthbar">
+          <div id="userColor" class="healthbar__value" :style="userBarStyle"></div>
+        </div>
+      </section>
+      <section class="container" v-if="winner != 'stop' && winner != null">
+      <audio class="Audio" src="gameOver.mp3" autoplay> </audio>
+          <h2 v-if="winner === 'user'"> You win </h2>
+          <h2 v-else-if="winner === 'monster'"> You Lost </h2>
+          <h2 v-else-if="winner === 'draw'"> Is a draw</h2>
+          <button @click="startGame"> New Game </button>
+      </section>
+      <section id="controls" v-if="winner === null">
+        <button @click="attackMonster">ATTACK</button>
+        <button @click="specialAtack"> SPECIAL ATTACK</button>
+        <button @click="healPlayer">HEAL</button>
+        <button @click="surrender">SURRENDER</button>
+      </section>
+      <section id="log" class="container">
+              <h2>Battle Log</h2>
+              <ul>
+                <li v-for="record in record">
+                  {{ record.actionBy}} - {{ record.actionType}} - {{record.actionValue}}
+                </li>
+              </ul>
+            </section>
+    </div>
+  </body>
+</html>
